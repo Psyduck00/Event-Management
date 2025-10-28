@@ -55,13 +55,13 @@ public with sharing class EventRegistrationHandler {
         
 
         for (Session__c session : [
-            SELECT Id, Name, Available_Seats__c 
+            SELECT Id, Name__c, Available_Seats__c 
             FROM Session__c 
             WHERE Event__c = :eventId AND Available_Seats__c > 0
             ORDER BY Name
         ]) {
             Map<String, String> option = new Map<String, String>();
-            option.put('label', session.Name + ' (' + (Integer)session.Available_Seats__c + ' seats)');
+            option.put('label', session.Name__c + ' (' + (Integer)session.Available_Seats__c + ' seats)');
             option.put('value', session.Id);
             sessionOptions.add(option);
         }
