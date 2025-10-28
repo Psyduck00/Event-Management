@@ -5,20 +5,16 @@ public with sharing class AttendeeTriggerHandler {
         List<Session__c> sessionsToUpdate = new List<Session__c>();
 
         for (Attendee__c att : newList) {
-
-            // Reduce available seat count if session selected
             if (att.Selected_Session__c != null) {
                 sessionsToUpdate.add(new Session__c(
                     Id = att.Selected_Session__c,
-                    Available_Seats__c = (Integer)null // Placeholder, will adjust below
+                    Available_Seats__c = (Integer)null
                 ));
             }
         }
 
-        // Reduce session seats in bulk
-        adjustSessionSeats(newList, -1); // Decrease seats for new registrations
+        adjustSessionSeats(newList, -1);
 
-        // Send all emails together
         if (!mails.isEmpty()) {
             Messaging.sendEmail(mails, false);
         }
@@ -27,7 +23,6 @@ public with sharing class AttendeeTriggerHandler {
     public static void afterUpdate(List<Attendee__c> newList, Map<Id, Attendee__c> oldMap) {
         List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 
-        // Sessions to update (for seat changes)
         List<Id> sessionsToUpdateIds = new List<Id>();
         Map<Id, Integer> seatAdjustment = new Map<Id, Integer>();
 
@@ -42,13 +37,11 @@ public with sharing class AttendeeTriggerHandler {
                 }
             }
 
-            // Handle Re-confirmation (if status changed back)
             if (oldAtt.Status__c != 'Confirmed' && att.Status__c == 'Confirmed' && att.Email__c != null) {
                 mails.add(buildConfirmationEmail(att));
             }
         }
 
-        // Apply seat adjustments
         if (!seatAdjustment.isEmpty()) {
             List<Session__c> sessionsToUpdate = [
                 SELECT Id, Available_Seats__c FROM Session__c WHERE Id IN :seatAdjustment.keySet()
@@ -65,7 +58,6 @@ public with sharing class AttendeeTriggerHandler {
         }
     }
 
-    // Utility: Send Confirmation Email
     private static Messaging.SingleEmailMessage buildConfirmationEmail(Attendee__c att) {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setToAddresses(new String[] { att.Email__c });
