@@ -1,0 +1,42 @@
+<template>
+    <lightning-card title="Attendee Registration" icon-name="standard:event">
+        <div class="slds-m-around_medium">
+            <lightning-input label="Full Name" value={name} onchange={handleNameChange} required></lightning-input>
+            <lightning-input label="Email" type="email" value={email} onchange={handleEmailChange} required></lightning-input>
+            
+            <hr class="slds-m-vertical_small"/>
+
+            <lightning-combobox
+                name="eventSelection"
+                label="Select Event"
+                value={eventId}
+                placeholder="Choose Event"
+                options={eventOptions}
+                onchange={handleEventChange}
+                required>
+            </lightning-combobox>
+
+            <lightning-combobox
+                name="sessionSelection"
+                label="Select Session"
+                value={sessionId}
+                placeholder="Choose Session"
+                options={sessionOptions}
+                onchange={handleSessionChange}
+                disabled={isSessionDisabled}
+                required>
+            </lightning-combobox>
+            
+            <div class="slds-m-top_medium">
+                <lightning-button label="Register" onclick={handleRegistration} variant="brand"></lightning-button>
+                <lightning-button label="Discard" onclick={handleDiscard} variant="neutral"></lightning-button>
+            </div>
+
+            <template if:true={message}>
+                <div class="slds-m-top_medium">
+                    <p>{message}</p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

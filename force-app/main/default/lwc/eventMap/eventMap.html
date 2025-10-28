@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Ongoing Events Today" icon-name="custom:custom63">
+        <template if:true={mapMarkers}>
+            <lightning-map
+                map-markers={mapMarkers}
+                zoom-level="5"
+                list-view="visible"
+                markers-title="Ongoing Events">
+            </lightning-map>
+        </template>
+        <template if:true={error}>
+            <div class="slds-text-color_error slds-m-around_medium">{error}</div>
+        </template>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading events..."></lightning-spinner>
+        </template>
+    </lightning-card>
+</template>

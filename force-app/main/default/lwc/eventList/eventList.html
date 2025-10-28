@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Upcoming Events">
+        <div class="slds-p-around_medium">
+            <template for:each={events} for:item="evt">
+                <p key={evt.Id}>
+                    {evt.Name} | Starts: {evt.Start_Date__c}
+                </p>
+            </template>
+            <template if:false={events}><p>No upcoming events found.</p></template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Event Summary (This Month)">
+        <div class="tile-container">
+            <div class="tile">
+                <div class="icon">🗓️</div>
+                <div class="label">Events</div>
+                <div class="value">{events}</div>
+            </div>
+            <div class="tile">
+                <div class="icon">👥</div>
+                <div class="label">Attendees</div>
+                <div class="value">{attendees}</div>
+            </div>
+            <div class="tile">
+                <div class="icon">🎤</div>
+                <div class="label">Sessions</div>
+                <div class="value">{sessions}</div>
+            </div>
+        </div>
+        <template if:true={error}>
+            <p class="slds-text-color_error slds-m-around_medium">{error}</p>
+        </template>
+    </lightning-card>
+</template>
