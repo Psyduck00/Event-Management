@@ -97,7 +97,6 @@ export default class EventRegistrationForm extends LightningElement {
                 // Clear the form on success
                 this.name = '';
                 this.email = '';
-                // Optional: reset event/session too
                 // this.eventId = '';
                 // this.sessionId = '';
             }

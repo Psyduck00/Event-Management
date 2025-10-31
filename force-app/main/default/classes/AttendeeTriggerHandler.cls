@@ -37,7 +37,10 @@ public with sharing class AttendeeTriggerHandler {
                 }
             }
 
-            if (oldAtt.Status__c != 'Confirmed' && att.Status__c == 'Confirmed' && att.Email__c != null) {
+            if (oldAtt.Status__c == 'Cancelled' && att.Status__c != 'Cancelled' && att.Email__c != null) {
+                seatAdjustment.put(att.Selected_Session__c, seatAdjustment.get(att.Selected_Session__c) == null ? 1 : seatAdjustment.get(att.Selected_Session__c) - 1);
+            }
+            if (oldAtt.Status__c != 'Confirmed' && att.Status__c == 'Confirmed') {
                 mails.add(buildConfirmationEmail(att));
             }
         }
